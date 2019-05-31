@@ -12,6 +12,10 @@ public class RubyController : MonoBehaviour
 
     public int health { get { return currentHealth; } }
 
+    public int launchSpeed;
+
+    public GameObject projectilePrefab;
+
     int currentHealth;
 
     bool isInvincible;
@@ -63,6 +67,11 @@ public class RubyController : MonoBehaviour
             if (invincibleTimer < 0)
                 isInvincible = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Launch();
+        }
     }
 
     public void ChangeHealth(int amount)
@@ -78,5 +87,15 @@ public class RubyController : MonoBehaviour
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);
+    }
+
+    void Launch()
+    {
+        GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        projectile.Launch(lookDirection, launchSpeed);
+
+        animator.SetTrigger("Launch");
     }
 }
