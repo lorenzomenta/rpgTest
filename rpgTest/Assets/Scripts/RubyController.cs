@@ -18,6 +18,8 @@ public class RubyController : MonoBehaviour
 
     int currentHealth;
 
+    int precedentHealth;
+
     bool isInvincible;
 
     float invincibleTimer;
@@ -84,8 +86,12 @@ public class RubyController : MonoBehaviour
             isInvincible = true;
             invincibleTimer = timeInvincible;
         }
-
+        precedentHealth = currentHealth;
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        if (currentHealth < precedentHealth)
+        {
+            animator.SetTrigger("Hit");
+        }
         Debug.Log(currentHealth + "/" + maxHealth);
     }
 
