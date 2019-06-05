@@ -92,7 +92,7 @@ public class RubyController : MonoBehaviour
         {
             animator.SetTrigger("Hit");
         }
-        Debug.Log(currentHealth + "/" + maxHealth);
+        UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
     }
 
     void Launch()
